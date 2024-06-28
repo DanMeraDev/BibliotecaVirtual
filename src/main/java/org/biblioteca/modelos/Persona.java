@@ -6,6 +6,15 @@ public abstract class Persona {
     private String correo;
     private String clave;
 
+    public Persona() {}
+
+    public Persona(Long id, String nombre, String correo, String clave) {
+        this.id = id;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.clave = clave;
+    }
+
     public Long getId() {
         return id;
     }
@@ -19,7 +28,11 @@ public abstract class Persona {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            this.nombre = nombre;
+        } else {
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
     }
 
     public String getCorreo() {
@@ -27,7 +40,11 @@ public abstract class Persona {
     }
 
     public void setCorreo(String correo) {
-        this.correo = correo;
+        if (correo != null && correo.contains("@")) {
+            this.correo = correo;
+        } else {
+            throw new IllegalArgumentException("El correo no es válido");
+        }
     }
 
     public String getClave() {
@@ -35,6 +52,12 @@ public abstract class Persona {
     }
 
     public void setClave(String clave) {
-        this.clave = clave;
+        if (clave != null && clave.length() >= 6) {
+            this.clave = clave;
+        } else {
+            throw new IllegalArgumentException("La clave debe tener al menos 6 caracteres");
+        }
     }
+
+    public abstract void mostrarInformacion();
 }
